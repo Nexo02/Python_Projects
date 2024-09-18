@@ -57,9 +57,7 @@ def resolve(codebook):
             return value
         elif isinstance(value, list) :  # If it's a list the function is called until there is only strings left
             return ' '.join(resolve_value(codebook[i]) for i in value)      
-        else:
-            return codebook[value]      # This should never be the case but whatever
-    
+        
     for i, value in codebook.items() :
         res_codebook[i] = resolve_value(value)
     
