@@ -1,0 +1,87 @@
+#Poem Decoding Challenge - www.101computing.net/poem-decoding-challenge
+
+codebook = {1:"a",
+            2:"and",
+            3:"as",
+            4:"beauty",
+            5:"blanketing",
+            6:"can't",
+            7:"crystal",
+            8:"each",
+            9:"earth",
+            10:"embrace",
+            11:"erase",
+            12:"falling",
+            13:"flake",
+            14:"footprints",
+            15:"goes",
+            16:"it",
+            17:"leaving",
+            18:"momentary",
+            19:"of",
+            20:"secrets",
+            21:"snow",
+            22:"so",
+            23:"soft",
+            24:"still",
+            25:"the",
+            26:"thrill",
+            27:"time",
+            28:"tranquil",
+            29:"whispering",
+            30:"with",
+            31:[12, 21],
+            32:[31, 31],
+            33:[29, 20, 3, 16, 15],
+            34:[32, 33],
+            35:[8, 7, 13],
+}
+            
+poem = [[29, 21],
+        [34],
+        [35, 22, 23, 2, 24],
+        [5, 25, 9, 30, 1, 28, 26],
+        [34],
+        [35, 1, 18, 10],
+        [17, 14, 19, 4, 27, 6, 11]]
+      
+# Complete this code by implementing a recursive function to replace all keys within each verse of the poem with their matching values from the codebook  
+
+def resolve(codebook): 
+    # Function to resolve the Codebook
+    
+    res_codebook = {}
+    
+    def resolve_value(value):
+        if isinstance(value, str) :     # If it's a String, it's fine already
+            return value
+        elif isinstance(value, list) :  # If it's a List the Function is called until there is only Strings left
+            return ' '.join(resolve_value(codebook[i]) for i in value)      
+        else:
+            return codebook[value]      # This should never be the case but whatever
+    
+    for i, value in codebook.items() :
+        res_codebook[i] = resolve_value(value)
+    
+    return res_codebook
+
+def recurse(poem, codebook) :
+    # Function to recurse the Poem with help of the resolved Codebook
+
+    res_codebook = resolve(codebook)
+    dec_poem = []
+    
+    for line in poem:
+        dec_line = ' '.join(res_codebook[word] for word in line)
+        dec_poem.append(dec_line)
+    
+    return dec_poem
+
+
+
+dec_poem = recurse(poem, codebook)
+
+# Print out the resolved Poem
+for line in dec_poem :
+        print(line)
+
