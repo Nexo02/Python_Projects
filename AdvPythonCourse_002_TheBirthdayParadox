@@ -1,0 +1,50 @@
+#The Birthday Paradox - www.101computing.net/the-birthday-paradox/
+import random
+import datetime
+
+#A function to generate a random date between two given dates
+def randomDate(startDate, endDate):
+   date = startDate.split("/")
+   start = datetime.date(int(date[2]), int(date[1]), int(date[0]))
+   date = endDate.split("/")
+   end = datetime.date(int(date[2]), int(date[1]), int(date[0]))
+   delta = end - start
+   randomDays = random.randint(0,delta.days)
+   return start + datetime.timedelta(days=randomDays)
+
+#List of 23 students in the class
+classList = ["Opal","Hugo","Malek","Terrence","Jeremiah","Abdel","Sophie","Ethan","Noah","Jing","Ines","Oceana","Diego","Zofia","Layla","Julian","Andrei","Ishan","Chloe","Mateo","Omar","Jouri","Lily"]
+birthdayList = []
+
+def generateBirthdays() :
+    global birthdayList
+
+    for i in range(0,len(classList)):
+        birthDate = randomDate('1/1/2000', '31/12/2000')
+        birthDay = birthDate.strftime('%d %b')
+        birthdayList.append(birthDay)
+    #print(classList[i] + " - Birthday: " + birthDay)  
+    return birthdayList
+
+#My code:
+doublesCounter = 0
+
+def checkForDouble(classList, birthdayList) :
+    global doublesCounter
+    for i in range(len(classList)) :
+        for j in range(i + 1, len(classList)) :
+            if birthdayList[i] == birthdayList[j] :
+                #print(classList[i], "and", classList[j], "share the same birthday, on", birthdayList[i])
+                doublesCounter += 1
+
+pool = 1000
+
+for i in range(pool) :
+    generateBirthdays()
+    checkForDouble(classList, birthdayList)
+    birthdayList.clear()
+    
+print("Out of", pool, "simulations, there where", doublesCounter, "double Birthdays in the groups of 23 People.")
+print("This amounts to a chance of roughly", doublesCounter/pool*100, "%")
+
+doublesCounter = 0
