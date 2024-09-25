@@ -1,0 +1,30 @@
+#Paris 2024 - JSON Challenge - www.101computing.net/paris-2024-json-challenge
+import json
+import os
+print(os.getcwd())
+print(os.path.isfile('medals.json'))
+
+ 
+def listMedallists(country):
+   print(" --- List of Medallists from " + country + " ---")
+
+   # load JSON data from file
+   with open('c:/Users/emde01/Documents/GitHub/Python_Projects/[Adv.001] Paris 2024 - JSON Challenge/medals.json', 'r') as file:
+      data = json.load(file)
+
+   # Perform a linear search using the JSON data
+   athletes = data["athletes"]
+   for athlete in athletes:
+      if athlete["country"]==country:
+         print(athlete["name"] + ": " + str(len(athlete["medals"])))
+                
+### Main Code Starts Here ###
+print("######################")
+print("#     Paris 2024     #")
+print("#   Olympic Games    #")
+print("######################")
+print("")
+country = input("Enter a country (e.g. France):").title()
+print("")
+listMedallists(country)
+
